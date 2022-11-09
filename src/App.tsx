@@ -1,13 +1,18 @@
 import { FormEvent, useState } from 'react';
+import { TextInput } from './components/TextInput';
+import { MagnifyingGlass } from 'phosphor-react';
+import { Header } from './components/Header';
 
-interface Props {}
+interface Props {
+  item: string;
+}
 
-export function App({}: Props) {
+export function App() {
   const [inputData, setInputData] = useState('');
   const [search, setSearch] = useState('');
   const [show, setShow] = useState(false);
   const [editIndex, setEditIndex] = useState<number>(0);
-  const [items, setItems] = useState([{ item: 'Caneta' }]);
+  const [items, setItems] = useState<Props[]>([]);
 
   const createItem = (e: FormEvent) => {
     e.preventDefault();
@@ -38,13 +43,14 @@ export function App({}: Props) {
   };
 
   return (
-    <div>
+    <div className='min-h-screen bg-gray-700'>
       <div>
         <input
           type="text"
           value={inputData}
           onChange={(e) => setInputData(e.target.value)}
         />
+        <Header/>
         {!show ? (
           <button onClick={createItem} type="submit">
             Criar
@@ -54,14 +60,19 @@ export function App({}: Props) {
         )}
       </div>
       <br />
-      <input
-        type="text"
-        placeholder="search"
-        onChange={(e) => {
-          setSearch(e.target.value);
-        }}
-        value={search}
-      />
+      <TextInput.Root>
+        <TextInput.Icon>
+          <MagnifyingGlass size={32} />
+        </TextInput.Icon>
+        <TextInput.Input
+          placeholder="search"
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
+          value={search}
+        />
+      </TextInput.Root>
+      {items.length < 1 && <p>show de bola</p>}
       {search.length > 0 ? (
         <ul>
           {filteredItems.map((data, i) => {
