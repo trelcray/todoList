@@ -1,21 +1,17 @@
-import { Slot } from "@radix-ui/react-slot";
-import { clsx } from "clsx";
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import { Slot } from '@radix-ui/react-slot';
+import { clsx } from 'clsx';
+import { IButtonButtonProps, IButtonIconProps, IButtonRootProps } from '../@types/button';
 
-export interface IButtonRootProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: ReactNode;
-  asChild?: boolean;
-  className?: string;
-}
 
-ButtonRoot.displayName = "Button.Root";
 
-function ButtonRoot({ children, className }: IButtonRootProps)  {
+ButtonRoot.displayName = 'Button.Root';
+
+function ButtonRoot({ children, className }: IButtonRootProps) {
   return (
     <div
       className={clsx(
-        "flex justify-center items-center bg-cyan-500 rounded font-semibold text-black text-sm transition-colors hover:bg-cyan-300 focus:ring-2 ring-white",
-        className
+        'flex justify-center items-center bg-gray-600 rounded font-semibold text-black text-sm transition-colors hover:bg-gray-700 focus:ring-2 ring-white',
+        className,
       )}
     >
       {children}
@@ -23,24 +19,19 @@ function ButtonRoot({ children, className }: IButtonRootProps)  {
   );
 }
 
-export interface IButtonIconProps {
-  children: ReactNode;
+
+
+ButtonIcon.displayName = 'Button.Icon';
+
+function ButtonIcon({ children, className }: IButtonIconProps) {
+  return (
+    <Slot className={clsx('w-6 h-6 text-gray-100', className)}>{children}</Slot>
+  );
 }
 
-ButtonIcon.displayName = "Button.Icon";
 
-function ButtonIcon({ children }: IButtonIconProps) {
-  return <Slot className="w-6 h-6 text-gray-100">{children}</Slot>;
-}
 
-export interface IButtonButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: ReactNode;
-  asChild?: boolean;
-  className?: string;
-}
-
-ButtonButton.displayName = "Button.Button";
+ButtonButton.displayName = 'Button.Button';
 
 function ButtonButton({
   children,
@@ -48,11 +39,13 @@ function ButtonButton({
   className,
   ...props
 }: IButtonButtonProps) {
-  const Comp = asChild ? Slot : "span";
+  const Comp = asChild ? Slot : 'span';
 
   return (
-    <button className={clsx("bg-transparent outlined", className)} {...props}>
-      <Comp className={clsx("text-md text-white gap-1 py-3 px-2", className)}>{children}</Comp>
+    <button className={clsx('bg-transparent outlined', className)} {...props}>
+      <Comp className={clsx('text-md text-white gap-1 py-3 px-2', className)}>
+        {children}
+      </Comp>
     </button>
   );
 }
