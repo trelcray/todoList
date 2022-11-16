@@ -1,8 +1,10 @@
 import { Slot } from '@radix-ui/react-slot';
 import { clsx } from 'clsx';
-import { IButtonButtonProps, IButtonIconProps, IButtonRootProps } from '../@types/button';
-
-
+import {
+  IButtonButtonProps,
+  IButtonIconProps,
+  IButtonRootProps,
+} from '../@types/button';
 
 ButtonRoot.displayName = 'Button.Root';
 
@@ -19,8 +21,6 @@ function ButtonRoot({ children, className }: IButtonRootProps) {
   );
 }
 
-
-
 ButtonIcon.displayName = 'Button.Icon';
 
 function ButtonIcon({ children, className }: IButtonIconProps) {
@@ -28,8 +28,6 @@ function ButtonIcon({ children, className }: IButtonIconProps) {
     <Slot className={clsx('w-6 h-6 text-gray-100', className)}>{children}</Slot>
   );
 }
-
-
 
 ButtonButton.displayName = 'Button.Button';
 
