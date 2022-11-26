@@ -13,10 +13,14 @@ import { deleteTask, updateTaks } from '../redux/todo.slice';
 import { useDispatch } from 'react-redux';
 import { setEditId, setInputData, setIsShow } from '../redux/state.slice';
 import { Checkbox } from './Checkbox';
+import { Alert } from './Alert';
+import { ToastSuccess } from './Toasts';
 
 export function TodoList() {
   const [search, setSearch] = useState('');
   const [isCompleted, setIsCompleted] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const { tasks } = useAppSelector((state) => state.tasks);
 
@@ -32,8 +36,13 @@ export function TodoList() {
     dispatch(setIsShow());
   };
 
+  const handleOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
   const handleDelete = (id: string) => {
     dispatch(deleteTask(id));
+    setIsDeleted(true);
   };
 
   const HandleComplet = (id: string, task: string, completed: boolean) => {
@@ -97,7 +106,13 @@ export function TodoList() {
                       HandleComplet(data.id, data.task, data.completed)
                     }
                   />
-                  {data.task}
+                  {data.completed ? (
+                    <p className="text-cyan-500 underline underline-offset-4">
+                      {data.task}
+                    </p>
+                  ) : (
+                    data.task
+                  )}
                 </div>
                 <div className="flex items-center">
                   <Button.Root className="rounded-full w-full h-full cursor-pointer bg-transparent hover:bg-gray-500">
@@ -111,12 +126,17 @@ export function TodoList() {
                   <Button.Root className="flex rounded-full w-full h-full cursor-pointer bg-transparent hover:bg-gray-500">
                     <Button.Icon className="rounded-full p-1">
                       <Trash
-                        onClick={() => handleDelete(data.id)}
+                        onClick={handleOpen}
                         className="hover:text-red-400 w-8 h-8"
                       />
                     </Button.Icon>
                   </Button.Root>
                 </div>
+                <Alert
+                  open={isOpen}
+                  onOpenChange={setIsOpen}
+                  handleDelete={() => handleDelete(data.id)}
+                />
               </List>
             );
           })}
@@ -133,7 +153,13 @@ export function TodoList() {
                       HandleComplet(data.id, data.task, data.completed)
                     }
                   />
-                  {data.task}
+                  {data.completed ? (
+                    <p className="text-cyan-500 underline underline-offset-4">
+                      {data.task}
+                    </p>
+                  ) : (
+                    data.task
+                  )}
                 </div>
                 <div className="flex items-center">
                   <Button.Root className="rounded-full w-full h-full cursor-pointer bg-transparent hover:bg-gray-500">
@@ -147,17 +173,27 @@ export function TodoList() {
                   <Button.Root className="flex rounded-full w-full h-full cursor-pointer bg-transparent hover:bg-gray-500">
                     <Button.Icon className="rounded-full p-1">
                       <Trash
-                        onClick={() => handleDelete(data.id)}
+                        onClick={handleOpen}
                         className="hover:text-red-400 w-8 h-8"
                       />
                     </Button.Icon>
                   </Button.Root>
                 </div>
+                <Alert
+                  open={isOpen}
+                  onOpenChange={setIsOpen}
+                  handleDelete={() => handleDelete(data.id)}
+                />
               </List>
             );
           })}
         </div>
       )}
+      <ToastSuccess
+        children="Successfully Deleted"
+        open={isDeleted}
+        onOpenChange={setIsDeleted}
+      />
     </div>
   );
 }
