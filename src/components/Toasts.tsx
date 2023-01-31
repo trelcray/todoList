@@ -1,5 +1,5 @@
 import { CheckCircle, WarningCircle, XCircle } from 'phosphor-react';
-import { Children, Dispatch } from 'react';
+import { Dispatch } from 'react';
 import { Button } from './Button';
 import { Progress } from './Progress';
 import { Toast } from './Toast';
@@ -61,7 +61,7 @@ export function ToastError({ open, onOpenChange, children }: Props) {
               </div>
             </Toast.Action>
           </div>
-          <Progress className='bg-red-500'/>
+          <Progress className="bg-red-500" />
         </Toast.Root>
       </Toast.Provider>
     </Toast.Provider>
